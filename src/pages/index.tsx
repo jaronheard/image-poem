@@ -11,7 +11,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto flex flex-col items-center justify-center h-screen p-4">
+      <main className="container mx-auto flex h-screen flex-col items-center justify-center p-4">
         <UploadImages />
       </main>
     </>
@@ -39,21 +39,16 @@ const UploadImages = () => {
         type="file"
         accept="image/*"
         onChange={onImageChange}
-        className="block text-sm text-slate-500
-      file:mr-4 file:py-2 file:px-4
-      file:rounded-full file:border-0
-      file:text-sm file:font-semibold
-      file:bg-violet-50 file:text-violet-700
-      hover:file:bg-violet-100"
+        className="block text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
       />
       {imageURLS.map((imageURL, index) => (
         <div
-          className="my-4 h-5/6 aspect-[9/16] bg-slate-100 flex place-content-center flex-col"
+          className="my-4 flex aspect-[9/16] h-5/6 flex-col place-content-center bg-slate-100"
           key={index}
         >
           <div
             contentEditable="true"
-            className="text-center text-base text-slate-500 my-2 outline-none leading-relaxed"
+            className="aspect-[9/1.333333] text-center text-[4vh] font-bold leading-relaxed text-slate-500 outline-none"
           >
             Enter text here
           </div>
@@ -61,11 +56,23 @@ const UploadImages = () => {
           <img
             src={imageURL}
             alt={`uploaded image`}
-            className="object-cover aspect-[3/4]"
+            className="aspect-[9/6] object-cover object-top"
           />
           <div
             contentEditable="true"
-            className="text-center text-base text-slate-500 my-2 outline-none leading-relaxed"
+            className="aspect-[9/1.333333] text-center text-[4vh] font-bold leading-relaxed text-slate-500 outline-none"
+          >
+            Enter text here
+          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imageURL}
+            alt={`uploaded image`}
+            className="aspect-[9/6] object-cover object-bottom"
+          />
+          <div
+            contentEditable="true"
+            className="aspect-[9/1.333333] text-center text-[4vh] font-bold leading-relaxed text-slate-500 outline-none"
           >
             Enter text here
           </div>
