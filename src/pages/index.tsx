@@ -12,7 +12,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto flex h-screen flex-col items-center justify-center p-4">
+      <main className="container mx-auto flex h-screen flex-col items-center justify-center">
         <UploadImages />
       </main>
     </>
@@ -32,7 +32,7 @@ const UploadImages = () => {
 
   const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
-    if (files) {
+    if (files && files.length > 0) {
       setImages(Array.from(files));
     }
   };
@@ -55,44 +55,48 @@ const UploadImages = () => {
         type="file"
         accept="image/*"
         onChange={onImageChange}
-        className="block text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
+        className={
+          images.length > 0
+            ? "absolute top-0 bottom-0 left-0 right-0 z-0 opacity-0"
+            : "block text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
+        }
       />
       {imageURLS.map((imageURL, index) => (
         <div
           ref={cardRef}
-          className="my-4 flex aspect-[9/16] h-5/6 flex-col place-content-center bg-slate-100"
+          className="z-10 flex aspect-[9/16] h-full flex-col place-content-center bg-slate-100"
           key={index}
         >
           <div
             contentEditable="true"
             className={`aspect-[9/1.333333] text-center text-[4vh] font-bold leading-relaxed text-[${textColor}] outline-none`}
           >
-            Enter text here
+            your
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={imageURL}
             alt={`uploaded image`}
-            className="aspect-[9/6] object-cover object-top"
+            className="aspect-[9/6] h-full w-full object-cover object-top"
             onLoad={() => setBackgroundColor(imageURL)}
           />
           <div
             contentEditable="true"
             className={`aspect-[9/1.333333] text-center text-[4vh] font-bold leading-relaxed text-[${textColor}] outline-none`}
           >
-            Enter text here
+            text
           </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={imageURL}
             alt={`uploaded image`}
-            className="aspect-[9/6] object-cover object-bottom"
+            className="aspect-[9/6] h-full w-full object-cover object-bottom"
           />
           <div
             contentEditable="true"
             className={`aspect-[9/1.333333] text-center text-[4vh] font-bold leading-relaxed text-[${textColor}] outline-none`}
           >
-            Enter text here
+            here
           </div>
         </div>
       ))}

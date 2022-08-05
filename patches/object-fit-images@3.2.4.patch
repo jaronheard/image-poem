@@ -1,0 +1,54 @@
+diff --git a/dist/ofi.common-js.js b/dist/ofi.common-js.js
+index 5544ef42f5ef6b8fc4f6864196ab9b8c3371d483..2d6612e1546b15b4da82158139f5d28757ce139c 100644
+--- a/dist/ofi.common-js.js
++++ b/dist/ofi.common-js.js
+@@ -4,10 +4,10 @@
+ var OFI = 'bfred-it:object-fit-images';
+ var propRegex = /(object-fit|object-position)\s*:\s*([-.\w\s%]+)/g;
+ var testImg = typeof Image === 'undefined' ? {style: {'object-position': 1}} : new Image();
+-var supportsObjectFit = 'object-fit' in testImg.style;
+-var supportsObjectPosition = 'object-position' in testImg.style;
+-var supportsOFI = 'background-size' in testImg.style;
+-var supportsCurrentSrc = typeof testImg.currentSrc === 'string';
++var supportsObjectFit = false;
++var supportsObjectPosition = false;
++var supportsOFI = false;
++var supportsCurrentSrc = false;
+ var nativeGetAttribute = testImg.getAttribute;
+ var nativeSetAttribute = testImg.setAttribute;
+ var autoModeEnabled = false;
+@@ -178,6 +178,7 @@ function hijackAttributes() {
+ }
+ 
+ function fix(imgs, opts) {
++	console.log('fix');
+ 	var startAutoMode = !autoModeEnabled && !imgs;
+ 	opts = opts || {};
+ 	imgs = imgs || 'img';
+diff --git a/dist/ofi.js b/dist/ofi.js
+index f064482f4ca618e46c7d8f2808b28e1324c8e985..aa8bada890c82144e5678d4a4ba983aff3600015 100644
+--- a/dist/ofi.js
++++ b/dist/ofi.js
+@@ -5,10 +5,10 @@ var objectFitImages = (function () {
+ var OFI = 'bfred-it:object-fit-images';
+ var propRegex = /(object-fit|object-position)\s*:\s*([-.\w\s%]+)/g;
+ var testImg = typeof Image === 'undefined' ? {style: {'object-position': 1}} : new Image();
+-var supportsObjectFit = 'object-fit' in testImg.style;
+-var supportsObjectPosition = 'object-position' in testImg.style;
+-var supportsOFI = 'background-size' in testImg.style;
+-var supportsCurrentSrc = typeof testImg.currentSrc === 'string';
++var supportsObjectFit = false;
++var supportsObjectPosition = false;
++var supportsOFI = false;
++var supportsCurrentSrc = false;
+ var nativeGetAttribute = testImg.getAttribute;
+ var nativeSetAttribute = testImg.setAttribute;
+ var autoModeEnabled = false;
+@@ -179,6 +179,7 @@ function hijackAttributes() {
+ }
+ 
+ function fix(imgs, opts) {
++	console.log('fix');
+ 	var startAutoMode = !autoModeEnabled && !imgs;
+ 	opts = opts || {};
+ 	imgs = imgs || 'img';
