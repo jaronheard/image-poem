@@ -25,33 +25,53 @@ const UploadImages = () => {
 
   useEffect(() => {
     setImageURLS(images.map((image) => URL.createObjectURL(image)));
-  } , [images]);
+  }, [images]);
 
   const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
     if (files) {
       setImages(Array.from(files));
     }
-  }
+  };
 
   return (
     <>
-      <input type="file" accept="image/*" onChange={onImageChange} className="block text-sm text-slate-500
+      <input
+        type="file"
+        accept="image/*"
+        onChange={onImageChange}
+        className="block text-sm text-slate-500
       file:mr-4 file:py-2 file:px-4
       file:rounded-full file:border-0
       file:text-sm file:font-semibold
       file:bg-violet-50 file:text-violet-700
-      hover:file:bg-violet-100" />
-      {
-        imageURLS.map((imageURL, index) => (
-          <div className="my-4 h-5/6 aspect-[9/16] bg-slate-100 flex place-content-center flex-col" key={index}>
-            <div contentEditable="true" className="text-center text-base text-slate-500 my-2 outline-none leading-relaxed">Enter text here</div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={imageURL} alt={`uploaded image`} className="object-cover aspect-[3/4]" />
-            <div contentEditable="true" className="text-center text-base text-slate-500 my-2 outline-none leading-relaxed">Enter text here</div>
+      hover:file:bg-violet-100"
+      />
+      {imageURLS.map((imageURL, index) => (
+        <div
+          className="my-4 h-5/6 aspect-[9/16] bg-slate-100 flex place-content-center flex-col"
+          key={index}
+        >
+          <div
+            contentEditable="true"
+            className="text-center text-base text-slate-500 my-2 outline-none leading-relaxed"
+          >
+            Enter text here
           </div>
-        ))
-      }
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imageURL}
+            alt={`uploaded image`}
+            className="object-cover aspect-[3/4]"
+          />
+          <div
+            contentEditable="true"
+            className="text-center text-base text-slate-500 my-2 outline-none leading-relaxed"
+          >
+            Enter text here
+          </div>
+        </div>
+      ))}
     </>
   );
 };
