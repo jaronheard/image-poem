@@ -1,11 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-
-type TechnologyCardProps = {
-  name: string;
-  description: string;
-  documentation: string;
-};
+import Image from "next/image";
+import { ChangeEvent, useEffect, useState } from "react";
 
 const Home: NextPage = () => {
   return (
@@ -17,50 +13,46 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="container mx-auto flex flex-col items-center justify-center h-screen p-4">
-        <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-gray-700">
-          Create <span className="text-purple-300">T3</span> App
-        </h1>
-        <p className="text-2xl text-gray-700">This stack uses:</p>
-        <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-3 lg:w-2/3">
-          <TechnologyCard
-            name="NextJS"
-            description="The React framework for production"
-            documentation="https://nextjs.org/"
-          />
-          <TechnologyCard
-            name="TypeScript"
-            description="Strongly typed programming language that builds on JavaScript, giving you better tooling at any scale"
-            documentation="https://www.typescriptlang.org/"
-          />
-          <TechnologyCard
-            name="TailwindCSS"
-            description="Rapidly build modern websites without ever leaving your HTML"
-            documentation="https://tailwindcss.com/"
-          />
-        </div>
+        <UploadImages />
       </main>
     </>
   );
 };
 
-const TechnologyCard = ({
-  name,
-  description,
-  documentation,
-}: TechnologyCardProps) => {
+const UploadImages = () => {
+  const [images, setImages] = useState<Array<File>>([]);
+  const [imageURLS, setImageURLS] = useState<Array<string>>([]);
+
+  useEffect(() => {
+    setImageURLS(images.map((image) => URL.createObjectURL(image)));
+  } , [images]);
+
+  const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (files) {
+      setImages(Array.from(files));
+    }
+  }
+
   return (
-    <section className="flex flex-col justify-center p-6 duration-500 border-2 border-gray-500 rounded shadow-xl motion-safe:hover:scale-105">
-      <h2 className="text-lg text-gray-700">{name}</h2>
-      <p className="text-sm text-gray-600">{description}</p>
-      <a
-        className="mt-3 text-sm underline text-violet-500 decoration-dotted underline-offset-2"
-        href={documentation}
-        target="_blank"
-        rel="noreferrer"
-      >
-        Documentation
-      </a>
-    </section>
+    <>
+      <input type="file" accept="image/*" onChange={onImageChange} className="block text-sm text-slate-500
+      file:mr-4 file:py-2 file:px-4
+      file:rounded-full file:border-0
+      file:text-sm file:font-semibold
+      file:bg-violet-50 file:text-violet-700
+      hover:file:bg-violet-100" />
+      {
+        imageURLS.map((imageURL, index) => (
+          <div className="my-4 h-5/6 aspect-[9/16] bg-slate-100 flex place-content-center flex-col" key={index}>
+            <div contentEditable="true" className="text-center text-base text-slate-500 my-2 outline-none leading-relaxed">Enter text here</div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={imageURL} alt={`uploaded image`} className="object-cover aspect-[3/4]" />
+            <div contentEditable="true" className="text-center text-base text-slate-500 my-2 outline-none leading-relaxed">Enter text here</div>
+          </div>
+        ))
+      }
+    </>
   );
 };
 
