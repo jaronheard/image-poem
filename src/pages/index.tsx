@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState, useRef } from "react";
+import { FastAverageColor } from "fast-average-color";
 
 const Home: NextPage = () => {
   return (
@@ -19,8 +20,11 @@ const Home: NextPage = () => {
 };
 
 const UploadImages = () => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
   const [images, setImages] = useState<Array<File>>([]);
   const [imageURLS, setImageURLS] = useState<Array<string>>([]);
+  const [textColor, setTextColor] = useState<string>("#000");
 
   useEffect(() => {
     setImageURLS(images.map((image) => URL.createObjectURL(image)));
@@ -33,6 +37,18 @@ const UploadImages = () => {
     }
   };
 
+  const setBackgroundColor = (imageURL: string) => {
+    const fac = new FastAverageColor();
+    const card = cardRef.current;
+
+    fac.getColorAsync(imageURL).then((color) => {
+      if (card) {
+        card.style.backgroundColor = color.rgba;
+        setTextColor(color.isDark ? "#fff" : "#000");
+      }
+    });
+  };
+
   return (
     <>
       <input
@@ -43,12 +59,13 @@ const UploadImages = () => {
       />
       {imageURLS.map((imageURL, index) => (
         <div
+          ref={cardRef}
           className="my-4 flex aspect-[9/16] h-5/6 flex-col place-content-center bg-slate-100"
           key={index}
         >
           <div
             contentEditable="true"
-            className="aspect-[9/1.333333] text-center text-[4vh] font-bold leading-relaxed text-slate-500 outline-none"
+            className={`aspect-[9/1.333333] text-center text-[4vh] font-bold leading-relaxed text-[${textColor}] outline-none`}
           >
             Enter text here
           </div>
@@ -57,10 +74,11 @@ const UploadImages = () => {
             src={imageURL}
             alt={`uploaded image`}
             className="aspect-[9/6] object-cover object-top"
+            onLoad={() => setBackgroundColor(imageURL)}
           />
           <div
             contentEditable="true"
-            className="aspect-[9/1.333333] text-center text-[4vh] font-bold leading-relaxed text-slate-500 outline-none"
+            className={`aspect-[9/1.333333] text-center text-[4vh] font-bold leading-relaxed text-[${textColor}] outline-none`}
           >
             Enter text here
           </div>
@@ -72,7 +90,7 @@ const UploadImages = () => {
           />
           <div
             contentEditable="true"
-            className="aspect-[9/1.333333] text-center text-[4vh] font-bold leading-relaxed text-slate-500 outline-none"
+            className={`aspect-[9/1.333333] text-center text-[4vh] font-bold leading-relaxed text-[${textColor}] outline-none`}
           >
             Enter text here
           </div>
