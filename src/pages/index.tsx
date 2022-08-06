@@ -80,6 +80,7 @@ const processImageFilesToURLs = async (images: File[]): Promise<string[]> => {
 const UploadImages = () => {
   const cardRef = useRef<HTMLDivElement>(null);
 
+  const [text, setText] = useState(["write", "a", "poem"]);
   const [images, setImages] = useState<Array<File>>([]);
   const [imageURLS, setImageURLs] = useState<Array<string>>([]);
   const [textColor, setTextColor] = useState<string>("#000");
@@ -132,9 +133,10 @@ const UploadImages = () => {
           key={index}
         >
           <div
+            contentEditable="true"
             className={`flex w-full items-center justify-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full outline-none`}
           >
-            your
+            {text[0]}
           </div>
           <div className="overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -149,7 +151,7 @@ const UploadImages = () => {
             contentEditable="true"
             className={`flex w-full items-center justify-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full outline-none`}
           >
-            text
+            {text[1]}
           </div>
           <div className="overflow-hiddn">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -164,7 +166,7 @@ const UploadImages = () => {
             contentEditable="true"
             className={`flex w-full items-center justify-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full outline-none`}
           >
-            here
+            {text[2]}
           </div>
         </div>
       ))}
