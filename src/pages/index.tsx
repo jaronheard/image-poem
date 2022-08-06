@@ -84,7 +84,7 @@ const UploadImages = () => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const [text, setText] = useQueryParam(
-    "text",
+    "🖋",
     withDefault(ArrayParam, ["write", "a", "poem"])
   );
   const [images, setImages] = useState<Array<File>>([]);
@@ -92,7 +92,6 @@ const UploadImages = () => {
   const [textColor, setTextColor] = useState<string>("#000");
 
   useEffect(() => {
-    console.log("images", images);
     processImageFilesToURLs(images).then((urls) => {
       setImageURLs(urls);
     });
@@ -102,6 +101,7 @@ const UploadImages = () => {
     const { files } = event.target;
     if (files && files.length > 0) {
       setImages(Array.from(files));
+      submitData(event);
     }
   };
 
@@ -127,6 +127,27 @@ const UploadImages = () => {
   ) => {
     const { value } = event.target;
     setTextAtIndex(value, index);
+  };
+
+  const submitData = async (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+
+    const image = images[0];
+    if (!image) {
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
+
+      await fetch("/api/upload-image", {
+        method: "POST",
+        body: formData,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
