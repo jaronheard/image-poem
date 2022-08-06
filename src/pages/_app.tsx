@@ -4,9 +4,14 @@ import type { AppRouter } from "../server/router";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import "../styles/globals.css";
+import { NextQueryParamProvider } from "next-query-params";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-  return <Component {...pageProps} />;
+  return (
+    <NextQueryParamProvider>
+      <Component {...pageProps} />
+    </NextQueryParamProvider>
+  );
 };
 
 const getBaseUrl = () => {

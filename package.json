@@ -19,6 +19,7 @@
     "html2canvas": "^1.4.1",
     "libheif-js": "^1.12.0",
     "next": "12.2.3",
+    "next-query-params": "^3.0.0",
     "puppeteer": "^16.0.0",
     "puppeteer-core": "^16.0.0",
     "react": "18.2.0",

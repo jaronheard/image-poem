@@ -5,6 +5,7 @@ import { FastAverageColor } from "fast-average-color";
 import heicToJpegDataUrl from "../utils/heicToJpegDataUrl";
 import exportAsImage from "../utils/exportAsImage";
 import { trpc } from "../utils/trpc";
+import { ArrayParam, useQueryParam, withDefault } from "next-query-params";
 
 type DownloadScreenShotProps = {
   url: string;
@@ -82,7 +83,10 @@ const UploadImages = () => {
   const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const [text, setText] = useState(["write", "a", "poem"]);
+  const [text, setText] = useQueryParam(
+    "text",
+    withDefault(ArrayParam, ["write", "a", "poem"])
+  );
   const [images, setImages] = useState<Array<File>>([]);
   const [imageURLS, setImageURLs] = useState<Array<string>>([]);
   const [textColor, setTextColor] = useState<string>("#000");
@@ -113,6 +117,18 @@ const UploadImages = () => {
     });
   };
 
+  const setTextAtIndex = (newText: string, index: number) => {
+    setText([...text.slice(0, index), newText, ...text.slice(index + 1)]);
+  };
+
+  const handleTextChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const { value } = event.target;
+    setTextAtIndex(value, index);
+  };
+
   return (
     <>
       <input
@@ -132,15 +148,14 @@ const UploadImages = () => {
       {imageURLS.map((imageURL, index) => (
         <div
           ref={cardRef}
-          className="z-10 grid aspect-[9/16] h-full grid-rows-[1.33333fr_6fr_1.33333fr_6fr_1.33333fr] bg-slate-100"
+          className="grid-rows-[1.33333fr_6fr_1.33333fr_6fr_1.33333fr z-10 grid aspect-[9/16] h-full"
           key={index}
         >
-          <div
-            contentEditable="true"
-            className={`flex w-full items-center justify-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full outline-none`}
-          >
-            {text[0]}
-          </div>
+          <input
+            className={`flex w-full justify-center text-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full bg-inherit outline-none`}
+            value={text[0] || ""}
+            onChange={(event) => handleTextChange(event, 0)}
+          ></input>
           <div className="overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -150,12 +165,11 @@ const UploadImages = () => {
               onLoad={() => setBackgroundColor(imageURL)}
             />
           </div>
-          <div
-            contentEditable="true"
-            className={`flex w-full items-center justify-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full outline-none`}
-          >
-            {text[1]}
-          </div>
+          <input
+            className={`flex w-full justify-center text-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full bg-inherit outline-none`}
+            value={text[1] || ""}
+            onChange={(event) => handleTextChange(event, 1)}
+          ></input>
           <div className="overflow-hiddn">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -165,12 +179,11 @@ const UploadImages = () => {
               onLoad={() => setBackgroundColor(imageURL)}
             />
           </div>
-          <div
-            contentEditable="true"
-            className={`flex w-full items-center justify-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full outline-none`}
-          >
-            {text[2]}
-          </div>
+          <input
+            className={`flex w-full justify-center text-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full bg-inherit outline-none`}
+            value={text[2] || ""}
+            onChange={(event) => handleTextChange(event, 2)}
+          ></input>
         </div>
       ))}
     </>
