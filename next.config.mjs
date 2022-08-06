@@ -15,7 +15,6 @@ function defineNextConfig(config) {
 export default defineNextConfig({
   reactStrictMode: true,
   swcMinify: true,
-  webpack5: true,
   webpack: (config) => {
     config.resolve.fallback = { fs: false };
 

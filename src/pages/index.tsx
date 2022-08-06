@@ -3,6 +3,7 @@ import Head from "next/head";
 import { ChangeEvent, useEffect, useState, useRef } from "react";
 import { FastAverageColor } from "fast-average-color";
 import heicToJpegDataUrl from "../utils/heicToJpegDataUrl";
+import exportAsImage from "../utils/exportAsImage";
 
 const Home: NextPage = () => {
   return (
@@ -88,6 +89,14 @@ const UploadImages = () => {
             : "block text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
         }
       />
+      {images.length > 0 && (
+        <button
+          className="absolute bottom-2 right-2 z-20 mr-4 block rounded-full border-0 bg-violet-50 py-2 px-4 text-sm font-semibold text-violet-700 hover:file:bg-violet-100"
+          onClick={() => exportAsImage(cardRef.current, "test")}
+        >
+          Download
+        </button>
+      )}
       {imageURLS.map((imageURL, index) => (
         <div
           ref={cardRef}
