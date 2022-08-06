@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { ChangeEvent, useEffect, useState, useRef } from "react";
 import { FastAverageColor } from "fast-average-color";
+import heicToJpegDataUrl from "../utils/heicToJpegDataUrl";
 
 const Home: NextPage = () => {
   return (
@@ -22,15 +23,37 @@ const Home: NextPage = () => {
   );
 };
 
+const processImageFilesToURLs = async (images: File[]): Promise<string[]> => {
+  const urls = images.map(async (image) => {
+    if (image.type === "image/heic") {
+      const base64Url = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.addEventListener("loadend", () => {
+          resolve(reader.result);
+        });
+        reader.addEventListener("error", reject);
+      });
+      const jpegURL = await heicToJpegDataUrl(base64Url);
+      return jpegURL;
+    }
+    return URL.createObjectURL(image);
+  });
+  return Promise.all(urls);
+};
+
 const UploadImages = () => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   const [images, setImages] = useState<Array<File>>([]);
-  const [imageURLS, setImageURLS] = useState<Array<string>>([]);
+  const [imageURLS, setImageURLs] = useState<Array<string>>([]);
   const [textColor, setTextColor] = useState<string>("#000");
 
   useEffect(() => {
-    setImageURLS(images.map((image) => URL.createObjectURL(image)));
+    console.log("images", images);
+    processImageFilesToURLs(images).then((urls) => {
+      setImageURLs(urls);
+    });
   }, [images]);
 
   const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +79,7 @@ const UploadImages = () => {
     <>
       <input
         type="file"
-        accept="image/*"
+        accept="image/*, image/heic"
         onChange={onImageChange}
         className={
           images.length > 0
@@ -80,7 +103,7 @@ const UploadImages = () => {
           <img
             src={imageURL}
             alt={`uploaded image`}
-            className="flex aspect-[9/6] h-full w-full object-cover object-top"
+            className="aspect-[9/6] h-full w-full object-cover object-top"
             onLoad={() => setBackgroundColor(imageURL)}
           />
           <div

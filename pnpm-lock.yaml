@@ -11,7 +11,9 @@ specifiers:
   eslint: 8.18.0
   eslint-config-next: 12.2.3
   fast-average-color: ^9.1.1
+  heic-convert: ^1.2.4
   html2canvas: ^1.4.1
+  libheif-js: ^1.12.0
   next: 12.2.3
   postcss: ^8.4.14
   prettier: 2.7.1
@@ -24,7 +26,9 @@ specifiers:
 
 dependencies:
   fast-average-color: 9.1.1
+  heic-convert: 1.2.4
   html2canvas: 1.4.1
+  libheif-js: 1.12.0
   next: 12.2.3_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -1340,6 +1344,22 @@ packages:
       function-bind: 1.1.1
     dev: true
 
+  /heic-convert/1.2.4:
+    resolution: {integrity: sha512-klJHyv+BqbgKiCQvCqI9IKIvweCcohDuDl0Jphearj8+16+v8eff2piVevHqq4dW9TK0r1onTR6PKHP1I4hdbA==}
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      heic-decode: 1.1.2
+      jpeg-js: 0.4.4
+      pngjs: 3.4.0
+    dev: false
+
+  /heic-decode/1.1.2:
+    resolution: {integrity: sha512-UF8teegxvzQPdSTcx5frIUhitNDliz/9Pui0JFdIqVRE00spVE33DcCYtZqaLNyd4y5RP/QQWZFIc1YWVKKm2A==}
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      libheif-js: 1.12.0
+    dev: false
+
   /html2canvas/1.4.1:
     resolution: {integrity: sha512-fPU6BHNpsyIhr8yyMpTLLxAbkaK8ArIBcmZIRiBLiDhjeqvXolaEmDGmELFuX9I4xDcaKKcJl+TKZLqruBbmWA==}
     engines: {node: '>=8.0.0'}
@@ -1492,6 +1512,10 @@ packages:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     dev: true
 
+  /jpeg-js/0.4.4:
+    resolution: {integrity: sha512-WZzeDOEtTOBK4Mdsar0IqEU5sMr3vSV2RqkAIzUEV2BHnUfKGyswWFPFwK5EeDo93K3FohSHbLAjj0s1Wzd+dg==}
+    dev: false
+
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -1542,6 +1566,11 @@ packages:
       prelude-ls: 1.2.1
       type-check: 0.4.0
     dev: true
+
+  /libheif-js/1.12.0:
+    resolution: {integrity: sha512-hDs6xQ7028VOwAFwEtM0Q+B2x2NW69Jb2MhQFUbk3rUrHzz4qo5mqS8VrqNgYnSc8TiUGnR691LnO4uIfEE23w==}
+    engines: {node: '>=8.0.0'}
+    dev: false
 
   /lilconfig/2.0.6:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}
@@ -1819,6 +1848,11 @@ packages:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /pngjs/3.4.0:
+    resolution: {integrity: sha512-NCrCHhWmnQklfH4MtJMRjZ2a8c80qXeMlQMv2uVp9ISJMTt562SbGd6n2oq0PaPgKm7Z6pL9E2UlLIhC+SHL3w==}
+    engines: {node: '>=4.0.0'}
+    dev: false
 
   /postcss-import/14.1.0_postcss@8.4.14:
     resolution: {integrity: sha512-flwI+Vgm4SElObFVPpTIT7SU7R3qk2L7PyduMcokiaVKuWv9d/U+Gm/QAd8NDLuykTWTkcrjOeD2Pp1rMeBTGw==}
