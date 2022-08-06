@@ -12,7 +12,7 @@ export default process.env.NODE_ENV === 'production'
 */
 
 import puppeteer from "../../utils/puppeteer";
-import chrome from "chrome-aws-lambda";
+import chrome from "@sparticuz/chrome-aws-lambda";
 import { NextApiRequest, NextApiResponse } from "next";
 
 async function getScreenshot(req: NextApiRequest, res: NextApiResponse) {

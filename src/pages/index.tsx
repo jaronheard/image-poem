@@ -4,6 +4,7 @@ import { ChangeEvent, useEffect, useState, useRef } from "react";
 import { FastAverageColor } from "fast-average-color";
 import heicToJpegDataUrl from "../utils/heicToJpegDataUrl";
 import exportAsImage from "../utils/exportAsImage";
+import { trpc } from "../utils/trpc";
 
 type DownloadScreenShotProps = {
   url: string;
@@ -78,6 +79,7 @@ const processImageFilesToURLs = async (images: File[]): Promise<string[]> => {
 };
 
 const UploadImages = () => {
+  const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
   const cardRef = useRef<HTMLDivElement>(null);
 
   const [text, setText] = useState(["write", "a", "poem"]);
@@ -123,6 +125,7 @@ const UploadImages = () => {
             : "block text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
         }
       />
+      {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading..</p>}
       {images.length > 0 && (
         <DownloadScreenShot url="https://image-poem.vercel.app" />
       )}
