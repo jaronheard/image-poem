@@ -5,6 +5,39 @@ import { FastAverageColor } from "fast-average-color";
 import heicToJpegDataUrl from "../utils/heicToJpegDataUrl";
 import exportAsImage from "../utils/exportAsImage";
 
+type DownloadScreenShotProps = {
+  url: string;
+};
+
+const DownloadScreenShot = ({ url }: DownloadScreenShotProps) => {
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  return (
+    <button
+      className="absolute bottom-2 right-2 z-20 mr-4 block rounded-full border-0 bg-violet-50 py-2 px-4 text-sm font-semibold text-violet-700 hover:file:bg-violet-100"
+      onClick={() => {
+        setStatus("loading");
+        exportAsImage(url, "test")
+          .then(() => {
+            setStatus("success");
+          })
+          .catch(() => {
+            setStatus("error");
+          });
+      }}
+    >
+      {status === "idle"
+        ? "Download"
+        : status === "success"
+        ? "Downloaded"
+        : status === "loading"
+        ? "Loading"
+        : "Error"}
+    </button>
+  );
+};
+
 const Home: NextPage = () => {
   return (
     <>
@@ -90,47 +123,46 @@ const UploadImages = () => {
         }
       />
       {images.length > 0 && (
-        <button
-          className="absolute bottom-2 right-2 z-20 mr-4 block rounded-full border-0 bg-violet-50 py-2 px-4 text-sm font-semibold text-violet-700 hover:file:bg-violet-100"
-          onClick={() => exportAsImage(cardRef.current, "test")}
-        >
-          Download
-        </button>
+        <DownloadScreenShot url="https://image-poem.vercel.app" />
       )}
       {imageURLS.map((imageURL, index) => (
         <div
           ref={cardRef}
-          className="z-10 flex aspect-[9/16] h-full flex-col place-content-center bg-slate-100"
+          className="z-10 grid aspect-[9/16] h-full grid-rows-[1.33333fr_6fr_1.33333fr_6fr_1.33333fr] bg-slate-100"
           key={index}
         >
           <div
-            contentEditable="true"
-            className={`flex aspect-[9/1.333333] items-center justify-center text-[4vh] font-semibold leading-relaxed text-[${textColor}] outline-none`}
+            className={`flex w-full items-center justify-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full outline-none`}
           >
             your
           </div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={imageURL}
-            alt={`uploaded image`}
-            className="aspect-[9/6] h-full w-full object-cover object-top"
-            onLoad={() => setBackgroundColor(imageURL)}
-          />
+          <div className="overflow-hidden">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imageURL}
+              alt={`uploaded image`}
+              className="aspect-[9/6] h-full w-full object-cover object-bottom"
+              onLoad={() => setBackgroundColor(imageURL)}
+            />
+          </div>
           <div
             contentEditable="true"
-            className={`flex aspect-[9/1.333333] items-center justify-center text-[4vh] font-semibold leading-relaxed text-[${textColor}] outline-none`}
+            className={`flex w-full items-center justify-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full outline-none`}
           >
             text
           </div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={imageURL}
-            alt={`uploaded image`}
-            className="aspect-[9/6] h-full w-full object-cover object-bottom"
-          />
+          <div className="overflow-hiddn">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imageURL}
+              alt={`uploaded image`}
+              className="aspect-[9/6] h-full w-full object-cover object-bottom"
+              onLoad={() => setBackgroundColor(imageURL)}
+            />
+          </div>
           <div
             contentEditable="true"
-            className={`flex aspect-[9/1.333333] items-center justify-center text-[4vh] font-semibold leading-relaxed text-[${textColor}] outline-none`}
+            className={`flex w-full items-center justify-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full outline-none`}
           >
             here
           </div>
