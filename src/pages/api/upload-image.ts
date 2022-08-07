@@ -25,6 +25,6 @@ export default async function handle(
     let message = "Unknown Error";
     if (error instanceof Error) message = error.message;
     // we'll proceed, but let's report it
-    reportError({ message });
+    res.status(500).json({ error: message });
   }
 }

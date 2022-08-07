@@ -219,7 +219,6 @@ const UploadImages = () => {
         method: "POST",
         body: formData,
       });
-      console.log(response);
       const json = await response.json();
       setImage(json.result.public_id);
     } catch (error) {
