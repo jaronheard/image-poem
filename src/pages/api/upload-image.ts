@@ -18,9 +18,9 @@ export default async function handle(
   try {
     const imageUploaded = await getImage(req);
 
-    // const imageData = await uploadImage(imageUploaded.filepath, id);
+    const imageData = await uploadImage(imageUploaded.filepath, id);
 
-    res.status(200).json({ result: imageUploaded });
+    res.status(200).json({ result: imageData });
   } catch (error) {
     let message = "Unknown Error";
     if (error instanceof Error) message = error.message;
