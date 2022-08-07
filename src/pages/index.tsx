@@ -1,15 +1,82 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+
 import { ChangeEvent, useEffect, useState, useRef } from "react";
 import { FastAverageColor } from "fast-average-color";
 import heicToJpegDataUrl from "../utils/heicToJpegDataUrl";
 import exportAsImage from "../utils/exportAsImage";
-import { trpc } from "../utils/trpc";
-import { ArrayParam, useQueryParam, withDefault } from "next-query-params";
+import {
+  ArrayParam,
+  BooleanParam,
+  StringParam,
+  useQueryParam,
+  withDefault,
+} from "next-query-params";
+import { useRouter } from "next/router";
 
 type DownloadScreenShotProps = {
   url: string;
 };
+
+const ErrorIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-5 w-5"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+  >
+    <path
+      fillRule="evenodd"
+      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
+const ClockIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-5 w-5"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+  >
+    <path
+      fillRule="evenodd"
+      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
+const DownloadIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-5 w-5"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+  >
+    <path
+      fillRule="evenodd"
+      d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
+
+const CheckIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-5 w-5"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+  >
+    <path
+      fillRule="evenodd"
+      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+      clipRule="evenodd"
+    />
+  </svg>
+);
 
 const DownloadScreenShot = ({ url }: DownloadScreenShotProps) => {
   const [status, setStatus] = useState<
@@ -17,7 +84,7 @@ const DownloadScreenShot = ({ url }: DownloadScreenShotProps) => {
   >("idle");
   return (
     <button
-      className="absolute bottom-2 right-2 z-20 mr-4 block rounded-full border-0 bg-violet-50 py-2 px-4 text-sm font-semibold text-violet-700 hover:file:bg-violet-100"
+      className="mr-4 block rounded-full border-0 bg-violet-50 py-2 px-4 text-sm font-semibold text-violet-700 hover:file:bg-violet-100"
       onClick={() => {
         setStatus("loading");
         exportAsImage(url, "test")
@@ -29,13 +96,15 @@ const DownloadScreenShot = ({ url }: DownloadScreenShotProps) => {
           });
       }}
     >
-      {status === "idle"
-        ? "Download"
-        : status === "success"
-        ? "Downloaded"
-        : status === "loading"
-        ? "Loading"
-        : "Error"}
+      {status === "idle" ? (
+        <DownloadIcon />
+      ) : status === "success" ? (
+        <CheckIcon />
+      ) : status === "loading" ? (
+        <ClockIcon />
+      ) : (
+        <ErrorIcon />
+      )}
     </button>
   );
 };
@@ -80,26 +149,33 @@ const processImageFilesToURLs = async (images: File[]): Promise<string[]> => {
 };
 
 const UploadImages = () => {
-  const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
   const cardRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   const [text, setText] = useQueryParam(
     "🖋",
     withDefault(ArrayParam, ["write", "a", "poem"])
   );
+  const [image, setImage] = useQueryParam("🖼", withDefault(StringParam, ""));
   const [images, setImages] = useState<Array<File>>([]);
   const [imageURLS, setImageURLs] = useState<Array<string>>([]);
   const [textColor, setTextColor] = useState<string>("#000");
 
   useEffect(() => {
-    processImageFilesToURLs(images).then((urls) => {
-      setImageURLs(urls);
-    });
-  }, [images]);
+    if (images.length > 0) {
+      processImageFilesToURLs(images).then((urls) => {
+        setImageURLs(urls);
+      });
+    }
+    if (images.length === 0 && image !== "") {
+      const url = `https://res.cloudinary.com/jaronheard/image/upload/w_900,c_scale/v1659900513/${image}.png`;
+      setImageURLs([url]);
+    }
+  }, [image, images]);
 
   const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
-    if (files && files.length > 0) {
+    if (files && files[0]) {
       setImages(Array.from(files));
       submitData(event, files[0]);
     }
@@ -144,7 +220,7 @@ const UploadImages = () => {
         body: formData,
       });
       const json = await response.json();
-      console.log(json);
+      setImage(json.result.public_id);
     } catch (error) {
       console.error(error);
     }
@@ -157,21 +233,32 @@ const UploadImages = () => {
         accept="image/*, image/heic"
         onChange={onImageChange}
         className={
-          images.length > 0
-            ? "absolute top-0 bottom-0 left-0 right-0 z-0 opacity-0"
-            : "block text-sm text-slate-500 file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100"
+          images.length > 0 || image !== ""
+            ? "hidden"
+            : `text-[${textColor}] file:text-[${textColor}] block text-sm file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold hover:file:bg-violet-100`
         }
       />
-      {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading..</p>}
-      {images.length > 0 && (
-        <DownloadScreenShot url="https://image-poem.vercel.app" />
-      )}
       {imageURLS.map((imageURL, index) => (
         <div
           ref={cardRef}
-          className="grid-rows-[1.33333fr_6fr_1.33333fr_6fr_1.33333fr z-10 grid aspect-[9/16] h-full"
+          className="grid-rows-[1.33333fr_6fr_1.33333fr_6fr_1.33333fr relative z-10 grid aspect-[9/16] h-full"
           key={index}
         >
+          {images.length > 0 && (
+            <div className="absolute bottom-[8vh] left-2 flex w-full flex-row flex-wrap justify-center gap-2">
+              <input
+                type="file"
+                accept="image/*, image/heic"
+                onChange={onImageChange}
+                className={`text-[${textColor}] file:text-[${textColor}] block text-sm file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold hover:file:bg-violet-100`}
+              />
+              {image !== "" && (
+                <DownloadScreenShot
+                  url={`https://image-poem.vercel.app${router.asPath}`}
+                />
+              )}
+            </div>
+          )}
           <input
             className={`flex w-full justify-center text-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full bg-inherit outline-none`}
             value={text[0] || ""}
