@@ -20,6 +20,7 @@
     "heic-convert": "^1.2.4",
     "html2canvas": "^1.4.1",
     "libheif-js": "^1.12.0",
+    "nanoid": "^4.0.0",
     "next": "12.2.3",
     "next-query-params": "^3.0.0",
     "puppeteer": "^16.0.0",
@@ -31,6 +32,7 @@
     "zod": "^3.17.3"
   },
   "devDependencies": {
+    "@types/formidable": "^2.0.5",
     "@types/node": "18.0.0",
     "@types/object-fit-images": "^3.2.3",
     "@types/react": "18.0.14",

@@ -101,7 +101,7 @@ const UploadImages = () => {
     const { files } = event.target;
     if (files && files.length > 0) {
       setImages(Array.from(files));
-      submitData(event);
+      submitData(event, files[0]);
     }
   };
 
@@ -129,22 +129,22 @@ const UploadImages = () => {
     setTextAtIndex(value, index);
   };
 
-  const submitData = async (event: ChangeEvent<HTMLInputElement>) => {
+  const submitData = async (
+    event: ChangeEvent<HTMLInputElement>,
+    image: File
+  ) => {
     event.preventDefault();
-
-    const image = images[0];
-    if (!image) {
-      return;
-    }
 
     try {
       const formData = new FormData();
       formData.append("image", image);
 
-      await fetch("/api/upload-image", {
+      const response = await fetch("/api/upload-image", {
         method: "POST",
         body: formData,
       });
+      const json = await response.json();
+      console.log(json);
     } catch (error) {
       console.error(error);
     }

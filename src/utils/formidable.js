@@ -9,5 +9,5 @@ export async function getImage(formData) {
     });
   });
 
-  return data.files.image;
+  return data?.files?.image;
 }
