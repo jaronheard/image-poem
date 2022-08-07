@@ -22,6 +22,6 @@ export default async function handle(
 
     res.status(200).json({ result: imageData });
   } catch (err) {
-    res.status(500).json({ error: "failed to upload image" });
+    res.status(500).json({ error: err });
   }
 }
