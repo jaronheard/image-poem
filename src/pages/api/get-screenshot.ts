@@ -35,7 +35,7 @@ async function getScreenshot(req: NextApiRequest, res: NextApiResponse) {
       height: 1600,
     });
 
-    await page.goto(req.query.url || "https://amazon.com");
+    await page.goto((req.query.url as string) || "https://amazon.com");
     const screenshot = await page.screenshot({
       encoding: "base64",
     });
