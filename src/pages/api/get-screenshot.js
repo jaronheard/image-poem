@@ -42,7 +42,9 @@ async function getScreenshot(req, res) {
       height: 1600,
     });
 
-    await page.goto(req.query.url || "https://amazon.com");
+    await page.goto(req.query.url || "https://amazon.com", {
+      waitUntil: "networkidle0",
+    });
     const screenshot = await page.screenshot({
       encoding: "base64",
     });
