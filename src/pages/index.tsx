@@ -7,7 +7,6 @@ import heicToJpegDataUrl from "../utils/heicToJpegDataUrl";
 import exportAsImage from "../utils/exportAsImage";
 import {
   ArrayParam,
-  BooleanParam,
   StringParam,
   useQueryParam,
   withDefault,
