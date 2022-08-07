@@ -220,7 +220,8 @@ const UploadImages = () => {
         body: formData,
       });
       const json = await response.json();
-      setImage(json.result.public_id);
+      console.log(json);
+      // setImage(json.result.public_id);
     } catch (error) {
       console.error(error);
     }
