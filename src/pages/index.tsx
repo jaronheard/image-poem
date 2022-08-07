@@ -269,7 +269,7 @@ const UploadImages = () => {
             <img
               src={imageURL}
               alt={`uploaded image`}
-              className="aspect-[9/6] h-full w-full object-cover object-bottom"
+              className="aspect-[9/6] h-full w-full object-cover object-top"
               onLoad={() => setBackgroundColor(imageURL)}
             />
           </div>
