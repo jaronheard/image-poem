@@ -31,8 +31,8 @@ async function getScreenshot(req: NextApiRequest, res: NextApiResponse) {
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:86.0) Gecko/20100101 Firefox/86.0"
     );
     await page.setViewport({
-      width: 1920,
-      height: 1080,
+      width: 900,
+      height: 1600,
     });
 
     await page.goto(req.query.url || "https://amazon.com");
