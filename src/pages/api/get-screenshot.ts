@@ -11,7 +11,7 @@ export default process.env.NODE_ENV === 'production'
   : puppeteerDev;
 */
 
-import puppeteer from "../../utils/puppeteer";
+import puppeteer from "puppeteer-core";
 import chrome from "@sparticuz/chrome-aws-lambda";
 import { NextApiRequest, NextApiResponse } from "next";
 
