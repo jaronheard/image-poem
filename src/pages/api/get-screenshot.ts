@@ -18,13 +18,21 @@ import { NextApiRequest, NextApiResponse } from "next";
 async function getScreenshot(req: NextApiRequest, res: NextApiResponse) {
   try {
     const browser = await puppeteer.launch(
-      process.env.NODE_ENV === "production"
+      process.env.AWS_REGION
         ? {
             args: chrome.args,
             executablePath: await chrome.executablePath,
             headless: chrome.headless,
           }
-        : {}
+        : {
+            args: [],
+            executablePath:
+              process.platform === "win32"
+                ? "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"
+                : process.platform === "linux"
+                ? "/usr/bin/google-chrome"
+                : "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+          }
     );
     const page = await browser.newPage();
     page.setUserAgent(
