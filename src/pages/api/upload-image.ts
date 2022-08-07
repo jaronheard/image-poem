@@ -21,7 +21,10 @@ export default async function handle(
     const imageData = await uploadImage(imageUploaded.filepath, id);
 
     res.status(200).json({ result: imageData });
-  } catch (err) {
-    res.status(500).json({ error: err });
+  } catch (error) {
+    let message = "Unknown Error";
+    if (error instanceof Error) message = error.message;
+    // we'll proceed, but let's report it
+    reportError({ message });
   }
 }
