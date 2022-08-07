@@ -12,10 +12,9 @@ export default process.env.NODE_ENV === 'production'
 */
 
 import puppeteer from "puppeteer-core";
-import chrome from "@sparticuz/chrome-aws-lambda";
-import { NextApiRequest, NextApiResponse } from "next";
+import chrome from "chrome-aws-lambda";
 
-async function getScreenshot(req: NextApiRequest, res: NextApiResponse) {
+async function getScreenshot(req, res) {
   try {
     const browser = await puppeteer.launch(
       process.env.AWS_REGION
@@ -43,7 +42,7 @@ async function getScreenshot(req: NextApiRequest, res: NextApiResponse) {
       height: 1600,
     });
 
-    await page.goto((req.query.url as string) || "https://amazon.com");
+    await page.goto(req.query.url || "https://amazon.com");
     const screenshot = await page.screenshot({
       encoding: "base64",
     });
