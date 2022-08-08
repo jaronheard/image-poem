@@ -110,7 +110,9 @@ const DownloadScreenShot = ({ url }: DownloadScreenShotProps) => {
 
 const DownloadAPIFlashScreenshot = ({ url }: DownloadScreenShotProps) => (
   <a
-    href={`https://api.apiflash.com/v1/urltoimage?access_key=3cdc3508085a4cf9a30283bb17f50a13&url=${url}&format=png&width=900&height=1600&fresh=true&wait_until=network_idle&delay=3`}
+    href={`https://api.apiflash.com/v1/urltoimage?access_key=3cdc3508085a4cf9a30283bb17f50a13&url=${encodeURIComponent(
+      url
+    )}&format=png&width=900&height=1600&fresh=true&wait_until=page_loaded`}
   >
     <DownloadIcon />
   </a>
