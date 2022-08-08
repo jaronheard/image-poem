@@ -13,10 +13,10 @@ function base64ToArrayBuffer(base64) {
 }
 
 /**
- * give it a heic base64 string and it returns a JPEG data URL
+ * give it a heic base64 string and it returns a PNG data URL
  * @return {Promise<string>}
  */
-async function heicToJpegDataUrl(dataUrl) {
+async function heicToPngDataUrl(dataUrl) {
   if (!dataUrl.startsWith("data:image/heic;base64,")) {
     throw new Error("expected heic base64 string");
   }
@@ -66,9 +66,9 @@ async function heicToJpegDataUrl(dataUrl) {
     ? canvas.convertToBlob.bind(canvas)
     : canvas.toBlob.bind(canvas);
 
-  const blob = await convertToBlob({ type: "image/jpeg" });
+  const blob = await convertToBlob({ type: "image/png" });
   const outputDataUrl = URL.createObjectURL(blob);
   return outputDataUrl;
 }
 
-export default heicToJpegDataUrl;
+export default heicToPngDataUrl;

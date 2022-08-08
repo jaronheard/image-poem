@@ -3,7 +3,7 @@ import Head from "next/head";
 
 import { ChangeEvent, useEffect, useState, useRef } from "react";
 import { FastAverageColor } from "fast-average-color";
-import heicToJpegDataUrl from "../utils/heicToJpegDataUrl";
+import heicToPngDataUrl from "../utils/heicToPngDataUrl";
 import exportAsImage from "../utils/exportAsImage";
 import {
   ArrayParam,
@@ -105,8 +105,8 @@ const processImageFilesToURLs = async (images: File[]): Promise<string[]> => {
         });
         reader.addEventListener("error", reject);
       });
-      const jpegURL = await heicToJpegDataUrl(base64Url);
-      return jpegURL;
+      const pngURL = await heicToPngDataUrl(base64Url);
+      return pngURL;
     }
     return URL.createObjectURL(image);
   });

@@ -20,6 +20,7 @@
     "formidable": "^2.0.1",
     "heic-convert": "^1.2.4",
     "html2canvas": "^1.4.1",
+    "image-blob-reduce": "^4.1.0",
     "libheif-js": "^1.12.0",
     "nanoid": "^4.0.0",
     "next": "12.2.3",
