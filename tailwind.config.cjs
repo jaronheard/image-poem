@@ -6,7 +6,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: [
-          "Futura",
+          "futura-pt",
           "ui-sans-serif",
           "system-ui",
           "-apple-system",

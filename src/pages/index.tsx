@@ -234,7 +234,7 @@ const UploadImages = () => {
         className={
           images.length > 0 || image !== ""
             ? "hidden"
-            : `text-[${textColor}] file:text-[${textColor}] block text-sm file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold hover:file:bg-violet-100`
+            : `text-[${textColor}] bg-violet-50 file:text-[${textColor}] block rounded-full text-sm file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold hover:bg-violet-100 file:hover:bg-violet-100`
         }
       />
       {imageURLS.map((imageURL, index) => (
@@ -249,7 +249,7 @@ const UploadImages = () => {
                 type="file"
                 accept="image/*, image/heic"
                 onChange={onImageChange}
-                className={`text-[${textColor}] file:text-[${textColor}] block text-sm file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold hover:file:bg-violet-100`}
+                className={`text-[${textColor}] bg-violet-50 file:text-[${textColor}] block rounded-full text-sm file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold hover:bg-violet-100 file:hover:bg-violet-100`}
               />
               {image !== "" && (
                 <a
@@ -293,7 +293,7 @@ const UploadImages = () => {
             />
           </div>
           <input
-            className={`flex w-full justify-center text-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full bg-inherit outline-none`}
+            className={`fonsemiboldld flex w-full justify-center text-center text-[4vh] leading-none text-[${textColor}] m-0 h-full bg-inherit outline-none`}
             value={text[2] || ""}
             onChange={(event) => handleTextChange(event, 2)}
           ></input>
