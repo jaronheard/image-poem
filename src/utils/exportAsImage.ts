@@ -1,15 +1,18 @@
-const exportAsImage = async (url: string, fileName = "test.jpeg") => {
-  return await fetch(`/api/get-screenshot${url ? `?url=${url}` : ""}`)
-    .then((res) => res.json())
-    .then((res) => res.blob)
-    .then((url) => {
-      fetch(url)
-        .then((res) => res.blob())
-        .then((blob) => {
-          const imageURL = URL.createObjectURL(blob);
-          downloadImage(imageURL, fileName);
-        });
+import { Dispatch, SetStateAction } from "react";
+
+const exportAsImage = async (
+  url: string,
+  fileName = "test.png",
+  setProgress: Dispatch<SetStateAction<"" | "in-progress" | "finished">>
+) => {
+  setProgress("in-progress");
+  return await fetch(url)
+    .then((res) => res.blob())
+    .then((blob) => {
+      const imageURL = URL.createObjectURL(blob);
+      downloadImage(imageURL, fileName);
     })
+    .then(() => setProgress("finished"))
     .catch((err) => console.log(err));
 };
 

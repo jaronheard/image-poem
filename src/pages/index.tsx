@@ -12,10 +12,7 @@ import {
   withDefault,
 } from "next-query-params";
 import { useRouter } from "next/router";
-
-type DownloadScreenShotProps = {
-  url: string;
-};
+import axios from "axios";
 
 const ErrorIcon = () => (
   <svg
@@ -77,37 +74,6 @@ const CheckIcon = () => (
   </svg>
 );
 
-const DownloadScreenShot = ({ url }: DownloadScreenShotProps) => {
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
-  return (
-    <button
-      className="mr-4 block rounded-full border-0 bg-violet-50 py-2 px-4 text-sm font-semibold text-violet-700 hover:file:bg-violet-100"
-      onClick={() => {
-        setStatus("loading");
-        exportAsImage(url, "test")
-          .then(() => {
-            setStatus("success");
-          })
-          .catch(() => {
-            setStatus("error");
-          });
-      }}
-    >
-      {status === "idle" ? (
-        <DownloadIcon />
-      ) : status === "success" ? (
-        <CheckIcon />
-      ) : status === "loading" ? (
-        <ClockIcon />
-      ) : (
-        <ErrorIcon />
-      )}
-    </button>
-  );
-};
-
 const Home: NextPage = () => {
   return (
     <>
@@ -159,6 +125,7 @@ const UploadImages = () => {
   const [images, setImages] = useState<Array<File>>([]);
   const [imageURLS, setImageURLs] = useState<Array<string>>([]);
   const [textColor, setTextColor] = useState<string>("#000");
+  const [progress, setProgress] = useState<"" | "in-progress" | "finished">("");
 
   useEffect(() => {
     if (images.length > 0) {
@@ -171,6 +138,11 @@ const UploadImages = () => {
       setImageURLs([url]);
     }
   }, [image, images]);
+
+  useEffect(() => {
+    // reset progress on image or text change
+    setProgress("");
+  }, [text, image]);
 
   const onImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
@@ -252,15 +224,26 @@ const UploadImages = () => {
                 className={`text-[${textColor}] bg-violet-50 file:text-[${textColor}] block rounded-full text-sm file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold hover:bg-violet-100 file:hover:bg-violet-100`}
               />
               {image !== "" && (
-                <a
-                  href={`https://api.apiflash.com/v1/urltoimage?access_key=3cdc3508085a4cf9a30283bb17f50a13&url=${encodeURIComponent(
-                    `https://image-poem.vercel.app${router.asPath}`
-                  )}&format=png&width=900&height=1600&fresh=true&wait_until=network_idle`}
-                  download
+                <button
+                  onClick={() =>
+                    exportAsImage(
+                      `https://api.apiflash.com/v1/urltoimage?access_key=3cdc3508085a4cf9a30283bb17f50a13&url=${encodeURIComponent(
+                        `https://image-poem.vercel.app${router.asPath}`
+                      )}&format=png&width=900&height=1600&fresh=true&wait_until=network_idle`,
+                      `image-poem.png`,
+                      setProgress
+                    )
+                  }
                   className={`bg-violet-50 py-2 px-4 text-sm font-semibold text-${textColor} rounded-full hover:bg-violet-100`}
                 >
-                  <DownloadIcon />
-                </a>
+                  {progress === "in-progress" ? (
+                    <ClockIcon />
+                  ) : progress === "finished" ? (
+                    <CheckIcon />
+                  ) : (
+                    <DownloadIcon />
+                  )}
+                </button>
               )}
             </div>
           )}
