@@ -7,23 +7,44 @@ import heicToPngDataUrl from "../utils/heicToPngDataUrl";
 import exportAsImage from "../utils/exportAsImage";
 import {
   ArrayParam,
+  BooleanParam,
   StringParam,
   useQueryParam,
   withDefault,
 } from "next-query-params";
 import { useRouter } from "next/router";
+import clsx from "clsx";
 
-const ErrorIcon = () => (
+const CollapseIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="h-5 w-5"
-    viewBox="0 0 20 20"
-    fill="currentColor"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className="h-6 w-6"
   >
     <path
-      fillRule="evenodd"
-      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-      clipRule="evenodd"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5m0-4.5l5.25 5.25"
+    />
+  </svg>
+);
+
+const ExpandIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className="h-6 w-6"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
     />
   </svg>
 );
@@ -125,6 +146,10 @@ const UploadImages = () => {
   const [imageURLS, setImageURLs] = useState<Array<string>>([]);
   const [textColor, setTextColor] = useState<string>("#000");
   const [progress, setProgress] = useState<"" | "in-progress" | "finished">("");
+  const [collapsed, setCollapsed] = useQueryParam(
+    "↕",
+    withDefault(BooleanParam, false)
+  );
 
   useEffect(() => {
     if (images.length > 0) {
@@ -211,7 +236,10 @@ const UploadImages = () => {
       {imageURLS.map((imageURL, index) => (
         <div
           ref={cardRef}
-          className="grid-rows-[1.33333fr_6fr_1.33333fr_6fr_1.33333fr relative z-10 grid aspect-[9/16] h-full"
+          className={clsx(`relative z-10 grid aspect-[9/16] h-full`, {
+            "grid-rows-[1.33333fr_6fr_1.33333fr_6fr_1.33333fr": !collapsed,
+            "grid-rows-[2fr_5fr_2fr_5fr_2fr": collapsed,
+          })}
           key={index}
         >
           {images.length > 0 && (
@@ -222,6 +250,14 @@ const UploadImages = () => {
                 onChange={onImageChange}
                 className={`text-[${textColor}] bg-violet-50 file:text-[${textColor}] block rounded-full text-sm file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold hover:bg-violet-100 file:hover:bg-violet-100`}
               />
+              {image !== "" && (
+                <button
+                  onClick={() => setCollapsed(!collapsed)}
+                  className={`bg-violet-50 py-2 px-4 text-sm font-semibold text-${textColor} rounded-full hover:bg-violet-100`}
+                >
+                  {collapsed ? <CollapseIcon /> : <ExpandIcon />}
+                </button>
+              )}
               {image !== "" && (
                 <button
                   onClick={() =>
@@ -256,7 +292,10 @@ const UploadImages = () => {
             <img
               src={imageURL}
               alt={`uploaded image`}
-              className="aspect-[9/6] h-full w-full object-cover object-top"
+              className={clsx("h-full w-full object-cover object-top", {
+                "aspect-[9/6]": !collapsed,
+                "aspect-[9/5]": collapsed,
+              })}
               onLoad={() => setBackgroundColor(imageURL)}
             />
           </div>
@@ -270,12 +309,15 @@ const UploadImages = () => {
             <img
               src={imageURL}
               alt={`uploaded image`}
-              className="aspect-[9/6] h-full w-full object-cover object-bottom"
+              className={clsx("h-full w-full object-cover object-bottom", {
+                "aspect-[9/6]": !collapsed,
+                "aspect-[9/5]": collapsed,
+              })}
               onLoad={() => setBackgroundColor(imageURL)}
             />
           </div>
           <input
-            className={`fonsemiboldld flex w-full justify-center text-center text-[4vh] leading-none text-[${textColor}] m-0 h-full bg-inherit outline-none`}
+            className={`flex w-full justify-center text-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full bg-inherit outline-none`}
             value={text[2] || ""}
             onChange={(event) => handleTextChange(event, 2)}
           ></input>
