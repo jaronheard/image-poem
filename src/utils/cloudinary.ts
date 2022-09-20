@@ -10,7 +10,13 @@ export function uploadImage(path: string, id: string) {
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload(
       path,
-      { public_id: `p/${id}`, tags: `image-poem` },
+      {
+        public_id: `p/${id}`,
+        tags: `image-poem`,
+        width: 900,
+        height: 1200,
+        crop: "fit",
+      },
       (err, res) => {
         if (err) reject(err);
         resolve(res);

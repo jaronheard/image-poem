@@ -158,7 +158,7 @@ const UploadImages = () => {
       });
     }
     if (images.length === 0 && image !== "") {
-      const url = `https://res.cloudinary.com/jaronheard/image/upload/w_900,c_scale/v1659900513/${image}.png`;
+      const url = `https://res.cloudinary.com/jaronheard/image/upload/w_900,h_1200,c_fit/v1659900513/${image}.png`;
       setImageURLs([url]);
     }
   }, [image, images]);
