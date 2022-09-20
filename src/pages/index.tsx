@@ -107,7 +107,7 @@ const Home: NextPage = () => {
         />
       </Head>
 
-      <main className="container mx-auto flex h-screen flex-col items-center justify-center">
+      <main className="flex h-screen w-screen flex-col items-center justify-center">
         <UploadImages />
       </main>
     </>

@@ -7,7 +7,7 @@ class MyDocument extends Document {
         <Head>
           <link rel="stylesheet" href="https://use.typekit.net/kyq0tjz.css" />
         </Head>
-        <body>
+        <body className="h-screen w-screen">
           <Main />
           <NextScript />
         </body>
