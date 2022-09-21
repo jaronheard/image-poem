@@ -227,7 +227,7 @@ const UploadImages = () => {
                   onClick={() =>
                     exportAsImage(
                       `https://api.apiflash.com/v1/urltoimage?access_key=3cdc3508085a4cf9a30283bb17f50a13&url=${encodeURIComponent(
-                        `https://image-poem.vercel.app${router.asPath}`
+                        `https://image-poem.vercel.app${router.asPath}&🪟=1`
                       )}&format=png&width=900&height=1600&fresh=true&wait_until=network_idle`,
                       `image-poem.png`,
                       setProgress
