@@ -19,7 +19,7 @@ import { CollapseIcon } from "./CollapseIcon";
 import { ExpandIcon } from "./ExpandIcon";
 import { ClockIcon } from "./ClockIcon";
 import { DownloadIcon } from "./DownloadIcon";
-import { CheckIcon } from "./CheckIcon";
+import { CheckIcon } from "../icons/CheckIcon";
 
 const Home: NextPage = () => {
   return (
