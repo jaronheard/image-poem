@@ -155,17 +155,39 @@ const UploadImages = () => {
 
   return (
     <>
-      <input
-        type="file"
-        accept="image/*, image/heic"
-        onChange={onImageChange}
-        // eslint-disable-next-line tailwindcss/no-custom-classname
-        className={
-          images.length > 0 || image !== ""
-            ? "hidden"
-            : `${`text-[${textColor}]`} block rounded-full bg-violet-50 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold hover:bg-violet-100 file:hover:bg-violet-100`
-        }
-      />
+      {images.length > 0 || image !== "" ? (
+        <></>
+      ) : (
+        <>
+          <h1 className="my-4 text-5xl text-indigo-700">image poem</h1>
+          <p>upload an image, then write a poem</p>
+          <div className="my-2 flex items-center ">
+            <input
+              type="file"
+              id="file-upload"
+              accept="image/*, image/heic"
+              onChange={onImageChange}
+              className="hidden"
+            />
+            <label
+              htmlFor="file-upload"
+              // TODO: accessibility
+              // eslint-disable-next-line tailwindcss/no-custom-classname
+            >
+              <div className="ml-2 motion-safe:animate-ping">✨</div>
+              <span
+                className={`block rounded-full border-0 bg-violet-100 py-2 px-4 text-sm font-semibold text-violet-700 hover:bg-violet-200 hover:text-violet-800`}
+              >
+                <div className="motion-safe:animate-pulse">
+                  <PhotoIcon />
+                </div>
+              </span>
+              <div className="ml-10 motion-safe:animate-ping">✨</div>
+            </label>
+          </div>
+          <p>vertical images work best</p>
+        </>
+      )}
       {imageURLS.map((imageURL, index) => (
         <div
           ref={cardRef}
