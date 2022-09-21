@@ -77,6 +77,7 @@ const UploadImages = () => {
     "↕",
     withDefault(BooleanParam, false)
   );
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [hideControls, setHideControls] = useQueryParam(
     "🪟",
     withDefault(BooleanParam, false)
@@ -238,7 +239,7 @@ const UploadImages = () => {
             />
           </div>
           <input
-            className={`flex w-full justify-center text-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full bg-inherit outline-none`}
+            className={`pfont-semibold flex w-full justify-center text-center text-[4vh] leading-none text-[${textColor}] m-0 h-full bg-inherit outline-none`}
             value={text[1] || ""}
             onChange={(event) => handleTextChange(event, 1)}
           ></input>
