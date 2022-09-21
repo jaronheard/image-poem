@@ -237,8 +237,8 @@ const UploadImages = () => {
         <div
           ref={cardRef}
           className={clsx(`relative z-10 grid aspect-[9/16] h-full`, {
-            "grid-rows-[1.33333fr_6fr_1.33333fr_6fr_1.33333fr": !collapsed,
-            "grid-rows-[2fr_5fr_2fr_5fr_2fr": collapsed,
+            "grid-rows-[1.33333fr_6fr_1.33333fr_6fr_1.33333fr]": !collapsed,
+            "grid-rows-[2fr_5fr_2fr_5fr_2fr]": collapsed,
           })}
           key={index}
         >
