@@ -17,6 +17,7 @@ specifiers:
   clsx: ^1.2.1
   eslint: 8.18.0
   eslint-config-next: 12.2.3
+  eslint-plugin-tailwindcss: ^3.6.2
   fast-average-color: ^9.1.1
   formidable: ^2.0.1
   heic-convert: ^1.2.4
@@ -68,6 +69,7 @@ devDependencies:
   autoprefixer: 10.4.8_postcss@8.4.14
   eslint: 8.18.0
   eslint-config-next: 12.2.3_b5e7v2qnwxfo6hmiq56u52mz3e
+  eslint-plugin-tailwindcss: 3.6.2
   postcss: 8.4.14
   prettier: 2.7.1
   prettier-plugin-tailwindcss: 0.1.13_prettier@2.7.1
@@ -1243,6 +1245,17 @@ packages:
       resolve: 2.0.0-next.4
       semver: 6.3.0
       string.prototype.matchall: 4.0.7
+    dev: true
+
+  /eslint-plugin-tailwindcss/3.6.2:
+    resolution: {integrity: sha512-C9Ka3w6W9F5l/3ZDLnkdbqmeujc1vE+p5drjP1Z1UyxgoE1Nh4/f8oQ4XC45PrZsS0Nyv0YKXNH8/dn/FJZKsQ==}
+    engines: {node: '>=12.13.0'}
+    dependencies:
+      fast-glob: 3.2.11
+      postcss: 8.4.14
+      tailwindcss: 3.1.7
+    transitivePeerDependencies:
+      - ts-node
     dev: true
 
   /eslint-scope/5.1.1:
