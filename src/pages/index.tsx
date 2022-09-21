@@ -159,10 +159,11 @@ const UploadImages = () => {
         type="file"
         accept="image/*, image/heic"
         onChange={onImageChange}
+        // eslint-disable-next-line tailwindcss/no-custom-classname
         className={
           images.length > 0 || image !== ""
             ? "hidden"
-            : `text-[${textColor}] bg-violet-50 text-[${textColor}] block rounded-full text-sm file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold hover:bg-violet-100 file:hover:bg-violet-100`
+            : `${`text-[${textColor}]`} block rounded-full bg-violet-50 text-sm file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:py-2 file:px-4 file:text-sm file:font-semibold hover:bg-violet-100 file:hover:bg-violet-100`
         }
       />
       {imageURLS.map((imageURL, index) => (
@@ -185,14 +186,16 @@ const UploadImages = () => {
               />
               <label
                 htmlFor="file-upload"
-                className={`text-[${textColor}] bg-violet-50 text-[${textColor}] block rounded-full border-0 bg-violet-50 py-2 px-4 text-sm font-semibold hover:bg-violet-100 hover:bg-violet-100`}
+                // eslint-disable-next-line tailwindcss/no-custom-classname
+                className={`bg-violet-50 ${`text-[${textColor}]`} block rounded-full border-0 bg-violet-50 py-2 px-4 text-sm font-semibold hover:bg-violet-100`}
               >
                 <PhotoIcon />
               </label>
               {image !== "" && (
                 <button
                   onClick={() => setCollapsed(!collapsed)}
-                  className={`bg-violet-50 py-2 px-4 text-sm font-semibold text-${textColor} rounded-full hover:bg-violet-100`}
+                  // eslint-disable-next-line tailwindcss/no-custom-classname
+                  className={`bg-violet-50 py-2 px-4 text-sm font-semibold ${`text-[${textColor}]`} rounded-full hover:bg-violet-100`}
                 >
                   {collapsed ? <CollapseIcon /> : <ExpandIcon />}
                 </button>
@@ -208,7 +211,8 @@ const UploadImages = () => {
                       setProgress
                     )
                   }
-                  className={`bg-violet-50 py-2 px-4 text-sm font-semibold text-${textColor} rounded-full hover:bg-violet-100`}
+                  // eslint-disable-next-line tailwindcss/no-custom-classname
+                  className={`bg-violet-50 py-2 px-4 text-sm font-semibold ${`text-[${textColor}]`} rounded-full hover:bg-violet-100`}
                 >
                   {progress === "in-progress" ? (
                     <ClockIcon />
@@ -222,7 +226,8 @@ const UploadImages = () => {
             </div>
           )}
           <input
-            className={`flex w-full justify-center text-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full bg-inherit outline-none`}
+            // eslint-disable-next-line tailwindcss/no-custom-classname
+            className={`flex w-full justify-center text-center text-[4vh] font-semibold leading-none ${`text-[${textColor}]`} m-0 h-full bg-inherit outline-none`}
             value={text[0] || ""}
             onChange={(event) => handleTextChange(event, 0)}
           ></input>
@@ -239,11 +244,12 @@ const UploadImages = () => {
             />
           </div>
           <input
-            className={`pfont-semibold flex w-full justify-center text-center text-[4vh] leading-none text-[${textColor}] m-0 h-full bg-inherit outline-none`}
+            // eslint-disable-next-line tailwindcss/no-custom-classname
+            className={`flex w-full justify-center text-center text-[4vh] font-semibold leading-none ${`text-[${textColor}]`} m-0 h-full bg-inherit outline-none`}
             value={text[1] || ""}
             onChange={(event) => handleTextChange(event, 1)}
           ></input>
-          <div className="overflow-hiddn">
+          <div className="overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={imageURL}
@@ -256,7 +262,8 @@ const UploadImages = () => {
             />
           </div>
           <input
-            className={`flex w-full justify-center text-center text-[4vh] font-semibold leading-none text-[${textColor}] m-0 h-full bg-inherit outline-none`}
+            // eslint-disable-next-line tailwindcss/no-custom-classname
+            className={`flex w-full justify-center text-center text-[4vh] font-semibold leading-none ${`text-[${textColor}]`} m-0 h-full bg-inherit outline-none`}
             value={text[2] || ""}
             onChange={(event) => handleTextChange(event, 2)}
           ></input>
