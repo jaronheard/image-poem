@@ -16,6 +16,8 @@ export function uploadImage(path: string, id: string) {
         width: 900,
         height: 1200,
         crop: "fit",
+        flags: "keep_iptc",
+        format: "png",
       },
       (err, res) => {
         if (err) reject(err);
