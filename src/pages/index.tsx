@@ -14,11 +14,11 @@ import {
 } from "next-query-params";
 import { useRouter } from "next/router";
 import clsx from "clsx";
-import { PhotoIcon } from "./PhotoIcon";
-import { CollapseIcon } from "./CollapseIcon";
-import { ExpandIcon } from "./ExpandIcon";
-import { ClockIcon } from "./ClockIcon";
-import { DownloadIcon } from "./DownloadIcon";
+import { PhotoIcon } from "../icons/PhotoIcon";
+import { CollapseIcon } from "../icons/CollapseIcon";
+import { ExpandIcon } from "../icons/ExpandIcon";
+import { ClockIcon } from "../icons/ClockIcon";
+import { DownloadIcon } from "../icons/DownloadIcon";
 import { CheckIcon } from "../icons/CheckIcon";
 
 const Home: NextPage = () => {
